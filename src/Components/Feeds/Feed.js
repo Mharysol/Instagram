@@ -20,8 +20,7 @@ const useStyles = makeStyles(darkTheme => ({
     maxWidth: "55%"
   },
   media: {
-    height: 0,
-    paddingTop: "56.25%" // 16:9
+    height: 360
   },
   expand: {
     transform: "rotate(0deg)",

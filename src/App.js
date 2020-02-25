@@ -1,10 +1,16 @@
-import React from "react";
-import { AppBar, Toolbar, List, Box } from "@material-ui/core";
+import React, { useState, useEffect } from "react";
 import {
-  makeStyles,
-  createMuiTheme,
-  MuiThemeProvider
-} from "@material-ui/core/styles";
+  AppBar,
+  Toolbar,
+  List,
+  Box,
+  IconButton,
+  Modal,
+  Input,
+  Button
+} from "@material-ui/core";
+import { PersonOutline } from "@material-ui/icons";
+import { makeStyles } from "@material-ui/core/styles";
 import "./App.css";
 import InstagramIcon from "./Components/CustomAppBar/InstagramIcon";
 import SearchBox from "./Components/CustomAppBar/SearchBox";
@@ -13,29 +19,110 @@ import Feed from "./Components/Feeds/Feed";
 import Stories from "./Components/Feeds/Stories";
 import apiFeeds from "./apiFeeds";
 
+function rand() {
+  return Math.round(Math.random() * 20) - 10;
+}
+
+function getModalStyle() {
+  const top = 50 + rand();
+  const left = 50 + rand();
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`
+  };
+}
+
 function App() {
   const classes = useStyles();
-  const logged = true;
-  const theme = createMuiTheme({ palette: { type: "dark" } });
+  const [modalStyle] = React.useState(getModalStyle);
+  const [logged, setlogged] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [user, setuser] = useState("");
+  const [password, setpassword] = useState("");
+
+  const updateuser = event => {
+    setuser(event.target.value);
+  };
+  const updatepassword = event => {
+    setpassword(event.target.value);
+  };
+
+  const login = () => {
+    setlogged(true);
+  };
+  const logout = () => {
+    setlogged(false);
+  };
+
+  const openmodal = () => {
+    setShowModal(true);
+  };
+  const closemodal = () => {
+    setShowModal(false);
+  };
 
   return (
-    <MuiThemeProvider theme={theme}>
-      <Box className="App">
-        <AppBar position="sticky" className={classes.appBar}>
-          <Toolbar>
-            <InstagramIcon />
+    <Box className="App">
+      <AppBar position="sticky" className={classes.appBar}>
+        <Toolbar>
+          <InstagramIcon />
 
-            {logged && (
-              <div className={classes.searchBox}>
-                <SearchBox />
-              </div>
-            )}
-            <div className={classes.grow}></div>
-            {logged && <IconsProfile />}
+          {logged && (
+            <div className={classes.searchBox}>
+              <SearchBox />
+            </div>
+          )}
+          <div className={classes.grow}></div>
+          {logged && <IconsProfile />}
 
-            {!logged && <div>Ingresar </div>}
-          </Toolbar>
-        </AppBar>
+          {!logged && (
+            <IconButton onClick={openmodal}>
+              <PersonOutline className={classes.rightIcons} />
+            </IconButton>
+          )}
+        </Toolbar>
+      </AppBar>
+      {showModal && (
+        <Modal
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+          open={showModal}
+          onClose={closemodal}
+        >
+          <div style={modalStyle} className={classes.paper}>
+            <h2 id="simple-modal-title">Inicie Sesion</h2>
+            <form className={classes.modal} noValidate autoComplete="off">
+              <Input
+                inputProps={{ "aria-label": "user or email" }}
+                placeholder="User or Email"
+                type="email"
+                onChange={updateuser}
+              />
+              <Input
+                placeholder="PassWord"
+                inputProps={{ "aria-label": "password" }}
+                type="password"
+                onChange={updatepassword}
+              />
+              <Button
+                variant="outlined"
+                disabled={!user || !password}
+                className={classes.Singup}
+                color="primary"
+                onClick={() => {
+                  login();
+                  closemodal();
+                }}
+              >
+                Log in
+              </Button>
+            </form>
+          </div>
+        </Modal>
+      )}
+      {logged && (
         <div>
           <AppBar position="fixed" className={classes.storiescontainer}>
             <List className={classes.root}>
@@ -60,8 +147,8 @@ function App() {
             );
           })}
         </div>
-      </Box>
-    </MuiThemeProvider>
+      )}
+    </Box>
   );
 }
 
@@ -91,6 +178,24 @@ const useStyles = makeStyles(theme => ({
   },
   App: {
     backgroundColor: theme.palette.background.default
+  },
+  paper: {
+    position: "absolute",
+    width: 400,
+    backgroundColor: theme.palette.background.default,
+    border: "2px solid #000",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3)
+  },
+  modal: {
+    "& > *": {
+      margin: theme.spacing(1)
+    }
+  },
+  Singup: {
+    "& > *": {
+      margin: theme.spacing(1)
+    }
   }
 }));
 

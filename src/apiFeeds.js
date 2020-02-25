@@ -10,7 +10,7 @@ const apiFeeds = [
   },
   {
     image:
-      "https://i.pinimg.com/originals/d2/3a/e6/d23ae6b3b4268047233d8820cebecf62.jpg",
+      "https://i.pinimg.com/originals/8a/14/94/8a14945dab88181d8f4ea8eb6050ac53.jpg",
     avatar: "L",
     name: "Lulo",
     city: "Bogota",
