@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -19,24 +19,9 @@ import Feed from "./Components/Feeds/Feed";
 import Stories from "./Components/Feeds/Stories";
 import apiFeeds from "./apiFeeds";
 
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
-
-function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`
-  };
-}
-
 function App() {
   const classes = useStyles();
-  const [modalStyle] = React.useState(getModalStyle);
+
   const [logged, setlogged] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [user, setuser] = useState("");
@@ -75,7 +60,7 @@ function App() {
             </div>
           )}
           <div className={classes.grow}></div>
-          {logged && <IconsProfile />}
+          {logged && <IconsProfile logout={logout} />}
 
           {!logged && (
             <IconButton onClick={openmodal}>
@@ -91,7 +76,7 @@ function App() {
           open={showModal}
           onClose={closemodal}
         >
-          <div style={modalStyle} className={classes.paper}>
+          <div className={`${classes.paper} ${classes.modalcontainer}`}>
             <h2 id="simple-modal-title">Inicie Sesion</h2>
             <form className={classes.modal} noValidate autoComplete="off">
               <Input
@@ -126,15 +111,21 @@ function App() {
         <div>
           <AppBar position="fixed" className={classes.storiescontainer}>
             <List className={classes.root}>
-              {apiFeeds.map(stories => {
-                return <Stories avatar={stories.avatar} name={stories.name} />;
+              {apiFeeds.map((stories, index) => {
+                return (
+                  <Stories
+                    key={`${index}-feed`}
+                    avatar={stories.avatar}
+                    name={stories.name}
+                  />
+                );
               })}
             </List>
           </AppBar>
 
-          {apiFeeds.map(feed => {
+          {apiFeeds.map((feed, index) => {
             return (
-              <div className={classes.feedcontainer}>
+              <div key={`${index}-feed`} className={classes.feedcontainer}>
                 <Feed
                   image={feed.image}
                   avatar={feed.avatar}
@@ -171,10 +162,11 @@ const useStyles = makeStyles(theme => ({
     marginLeft: "70%",
     marginRight: "10%",
     marginTop: "10%",
-    maxWidth: "25%"
+    maxWidth: "25%",
+    backgroundColor: "#000"
   },
   appBar: {
-    backgroundColor: theme.palette.primary.dark
+    backgroundColor: "#000"
   },
   App: {
     backgroundColor: theme.palette.background.default
@@ -192,6 +184,17 @@ const useStyles = makeStyles(theme => ({
       margin: theme.spacing(1)
     }
   },
+  modalcontainer: {
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)"
+  },
+
+  rightIcons: {
+    margin: "5px",
+    color: theme.palette.common.white
+  },
+
   Singup: {
     "& > *": {
       margin: theme.spacing(1)
