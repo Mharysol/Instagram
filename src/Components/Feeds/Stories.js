@@ -6,11 +6,10 @@ import {
   ListItemAvatar,
   Avatar
 } from "@material-ui/core";
-import moment from "moment";
 
 const useStyles = makeStyles(theme => ({
-  inline: {
-    display: "inline"
+  letters: {
+    color: "#fff"
   }
 }));
 
@@ -19,7 +18,11 @@ const Stories = ({ avatar, name }) => {
   return (
     <ListItem alignItems="flex-start">
       <ListItemAvatar>{<Avatar>{avatar}</Avatar>}</ListItemAvatar>
-      <ListItemText primary={name} secondary="Febrero 24 14:05" />
+      <ListItemText
+        className={classes.letters}
+        primary={name}
+        secondary={<p className={classes.letters}>Febrero 24 14:05</p>}
+      />
     </ListItem>
   );
 };
