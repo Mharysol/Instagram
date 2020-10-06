@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   AppBar,
-  Toolbar,
   List,
   Box,
   IconButton,
@@ -19,8 +18,9 @@ import apiFeeds from "../../apiFeeds";
 
 import { useStyles } from "./styles";
 import { CustomAppBar } from "../../Components/CustomAppBar";
+import Profile from "./Profile";
 
-function Home() {
+const Home = match => {
   const classes = useStyles();
 
   const [logged, setlogged] = useState(false);
@@ -111,7 +111,7 @@ function Home() {
           </div>
         </Modal>
       )}
-      {logged && (
+      {!match.match.path.includes("profile") && logged && (
         <div>
           <AppBar position="fixed" className={classes.storiescontainer}>
             <List className={classes.root}>
@@ -143,8 +143,9 @@ function Home() {
           })}
         </div>
       )}
+      {match.match.path.includes("profile") && logged && <Profile />}
     </Box>
   );
-}
+};
 
 export default Home;

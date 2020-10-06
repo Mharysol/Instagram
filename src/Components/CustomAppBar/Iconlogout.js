@@ -1,8 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core";
 import { Grid, Typography, ButtonBase, Button } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
-export default function Profile({ logout }) {
+export default function Iconlogout({ logout }) {
   const classes = useStyles();
   return (
     <div className={`${classes.paper} ${classes.modalcontainer}`}>
@@ -25,6 +26,16 @@ export default function Profile({ logout }) {
               <Typography variant="body2" gutterBottom>
                 Buenos Aires
               </Typography>
+            </Grid>
+            <Grid item>
+              <Link to="/profile">
+                <Button
+                  variant="outlined"
+                  className={classes.Singup}
+                  color="primary"
+                  onClick={() => {}}
+                />
+              </Link>
             </Grid>
             <Grid item>
               <Button

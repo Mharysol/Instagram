@@ -25,6 +25,15 @@ const apiFeeds = [
     city: "Londres",
     description: "Mord Lindo",
     comments: ["Mord demasiado lindo", "Mord demasiado Gordo"]
+  },
+  {
+    image:
+      "https://www.cat-breeds-encyclopedia.com/images/American-longhair.jpg",
+    avatar: "M",
+    name: "Milanesa",
+    city: "Milan, Italia",
+    description: "Milanesin Lindo",
+    comments: ["Milanesin demasiado lindo", "Milanesin demasiado Gordo"]
   }
 ];
 

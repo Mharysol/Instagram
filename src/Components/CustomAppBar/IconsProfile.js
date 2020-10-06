@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core";
 import { IconButton, Modal } from "@material-ui/core";
 import { Explore, FavoriteBorder, PersonOutline } from "@material-ui/icons";
-import Profile from "../Profile/Profile";
+import Iconlogout from "./Iconlogout";
 
 const IconsProfile = ({ logout }) => {
   const classes = useStyles();
@@ -34,7 +34,7 @@ const IconsProfile = ({ logout }) => {
         open={showModal}
         onClose={closemodal}
       >
-        <Profile logout={logout} />
+        <Iconlogout logout={logout} />
       </Modal>
     </div>
   );
